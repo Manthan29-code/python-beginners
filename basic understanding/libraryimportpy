@@ -1,0 +1,6 @@
+import timefunction # this is user define library
+a=78
+b=98
+timefunction.currentdate()
+timefunction.currenttime()
+timefunction.add(a,b)

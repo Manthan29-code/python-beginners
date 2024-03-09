@@ -1,0 +1,14 @@
+def f(n):
+    if n<4:
+     s=n/(n-3)
+    print("Value of s is",s)
+
+try:
+ #f(3)              # in we comment this statment(f(3))           
+ f(5)              # value error will be occurs
+except ZeroDivisionError:
+    print("ZeroDivisionError occurs")
+except NameError:
+    print("NameError occurs")
+finally:                            #this statment always executes after tray statment
+    print("statment in finally")    # whatever error raises or not

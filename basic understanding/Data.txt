@@ -1,0 +1,35 @@
+
+Student 1 Details
+Name: Krina	SID:-9
+Marks
+Maths	English	Computer:
+78	74	70
+Total Marks=222 #
+
+Student 2 Details
+Name: Mahi	SID:-7
+Marks
+Maths	English	Computer:
+99	91	80
+Total Marks=270 #
+
+Student 1 Details
+Name: Vidhya	SID:-8
+Marks
+Maths	English	Computer:
+98	78	67
+Total Marks=243 #
+
+Student 2 Details
+Name: Meena	SID:-8
+Marks
+Maths	English	Computer:
+67	59	49
+Total Marks=175 #
+
+Student 3 Details
+Name: Yash	SID:-98
+Marks
+Maths	English	Computer:
+67	83	78
+Total Marks=228 #
