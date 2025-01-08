@@ -4,42 +4,52 @@ import tkinter as tk
 from tkinter import messagebox, scrolledtext
 
 def download_pdfs():
-    sub_code = entry_sub_code.get()
-    sub_name = entry_sub_name.get()
+    try:
+        sub_code = entry_sub_code.get()
+        sub_name = entry_sub_name.get()
 
-    if not sub_code or not sub_name:
-        messagebox.showwarning("Input Error", "Please enter both subject code and subject name.")
-        return
+        if not sub_code or not sub_name:
+            messagebox.showwarning("Input Error", "Please enter both subject code and subject name.")
+            return
 
-    curr_dir = os.getcwd()
-    output_text.delete(1.0, tk.END)
-    output_text.insert(tk.END, f"Starting download for subject: {sub_name}...\n")
+        # Get the directory where the script is located
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        output_text.delete(1.0, tk.END)
+        output_text.insert(tk.END, f"Starting download for subject: {sub_name}...\n")
 
-    # Download Summer files
-    for i in range(17, 24):
-        url = f"https://gtu.ac.in/uploads/S20{i}/BE/{sub_code}.pdf"
-        response = requests.get(url)
-        if response:
-            file_path = os.path.join(curr_dir, f"{sub_name}_S{i}.pdf")
-            with open(file_path, "wb") as file:
-                file.write(response.content)
-            output_text.insert(tk.END, f"✔ Downloaded: {sub_name}_S{i}.pdf\n")
-        else:
-            output_text.insert(tk.END, f"✘ {sub_name}_S{i} not available.\n")
+        # Download Summer files
+        for i in range(17, 24):
+            try:
+                url = f"https://gtu.ac.in/uploads/S20{i}/BE/{sub_code}.pdf"
+                response = requests.get(url, timeout=10)
+                if response.status_code == 200:
+                    file_path = os.path.join(script_dir, f"{sub_name}_S{i}.pdf")
+                    with open(file_path, "wb") as file:
+                        file.write(response.content)
+                    output_text.insert(tk.END, f"✔ Downloaded: {sub_name}_S{i}.pdf\n")
+                else:
+                    output_text.insert(tk.END, f"✘ {sub_name}_S{i} not available.\n")
+            except requests.RequestException as e:
+                output_text.insert(tk.END, f"✘ Error downloading {sub_name}_S{i}: {str(e)}\n")
 
-    # Download Winter files
-    for i in range(17, 24):
-        url = f"https://gtu.ac.in/uploads/W20{i}/BE/{sub_code}.pdf"
-        response = requests.get(url)
-        if response:
-            file_path = os.path.join(curr_dir, f"{sub_name}_W{i}.pdf")
-            with open(file_path, "wb") as file:
-                file.write(response.content)
-            output_text.insert(tk.END, f"✔ Downloaded: {sub_name}_W{i}.pdf\n")
-        else:
-            output_text.insert(tk.END, f"✘ {sub_name}_W{i} not available.\n")
+        # Download Winter files
+        for i in range(17, 24):
+            try:
+                url = f"https://gtu.ac.in/uploads/W20{i}/BE/{sub_code}.pdf"
+                response = requests.get(url, timeout=10)
+                if response.status_code == 200:
+                    file_path = os.path.join(script_dir, f"{sub_name}_W{i}.pdf")
+                    with open(file_path, "wb") as file:
+                        file.write(response.content)
+                    output_text.insert(tk.END, f"✔ Downloaded: {sub_name}_W{i}.pdf\n")
+                else:
+                    output_text.insert(tk.END, f"✘ {sub_name}_W{i} not available.\n")
+            except requests.RequestException as e:
+                output_text.insert(tk.END, f"✘ Error downloading {sub_name}_W{i}: {str(e)}\n")
 
-    output_text.insert(tk.END, "Download process completed.\n")
+        output_text.insert(tk.END, "Download process completed.\n")
+    except Exception as e:
+        messagebox.showerror("Error", f"An unexpected error occurred: {str(e)}")
 
 # Setup the GUI window
 root = tk.Tk()
